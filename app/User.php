@@ -6,7 +6,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Tymon\JWTAuth\Contracts\Providers\JWT;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -38,12 +37,29 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getJWTIdentifier()     {       return $this->getKey();     }
-    public function getJWTCustomClaims()     {       return [];     }
-    public function articles() {     return $this->hasMany('App\Article'); }
-    public function comments() {     return $this->hasMany('App\Comment');
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
     }
-    public function categories()     {
-        return $this->belongsToMany('App\Category')->withTimestamps();
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Category')->as('subscriptions')->withTimestamps();
     }
 }
