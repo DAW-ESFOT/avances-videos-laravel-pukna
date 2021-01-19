@@ -18,9 +18,7 @@ class CategoriesTableSeeder extends Seeder
 
         for ($i = 0; $i < 3; $i++) {
             Category::create([
-                'name' => $faker->word
-            ]);
+                'name' => $faker->word]);
         }
-
     }
 }
